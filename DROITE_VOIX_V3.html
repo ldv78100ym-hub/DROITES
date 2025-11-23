@@ -1,0 +1,1805 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Cours & Exercices sur les Droites : L'Équation Réduite y = mx + p (Corrigé Final Robustifié)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script type="text/javascript" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            }
+        };
+    </script>
+
+    <style>
+        /* BASE STYLES */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            margin: 0;
+        }
+        
+        h2 {
+            color: #007bff;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 5px;
+            margin-top: 25px;
+        }
+
+        section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            max-width: 900px; 
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .encadre {
+    	    display: inline-block;
+    	    border: 2px solid #dc3545;
+    	    padding: 2px 5px;
+    	    border-radius: 4px;
+    	    font-weight: bold;
+    	    color: #333;
+    	    background-color: #ffe6e6;
+    	    line-height: 1.5;
+	    }
+        
+        /* STYLES INTERACTIFS DU COURS */
+        #btn-container {
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            display: flex; 
+            justify-content: center;
+            flex-wrap: wrap; 
+        }
+        .btn-cas {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: background-color 0.3s;
+            margin: 5px;
+            min-width: 150px; 
+            flex-grow: 1;
+            max-width: 48%;
+            white-space: nowrap; 
+        }
+        .methode-container {
+            display: none; 
+            margin-bottom: 30px; 
+            padding: 15px;
+            border-left: 5px solid #ffc107;
+            border-radius: 0 5px 5px 0; 
+            background-color: #fff9e6; 
+        }
+        .methode-container.active {
+            display: block; 
+            border-left: 5px solid #d9534f;
+            background-color: #fefafa;
+        }
+        
+        /* Boutons de niveau de difficulté (Niveau 1/2) */
+        .difficulty-selectors {
+            margin: 10px 0;
+        }
+        .btn-niveau {
+            background-color: #6c757d;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .btn-niveau.active {
+            background-color: #007bff;
+            font-weight: bold;
+        }
+
+        /* Boutons Indication/Solution */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .btn-toggle-hint {
+            background-color: #f0ad4e; 
+            color: white;
+            border: none; 
+            padding: 10px 15px; 
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn-toggle-solution {
+            background-color: #28a745; 
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .hint-container {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #f0ad4e;
+            background-color: #fff3cd;
+            border-radius: 5px;
+        }
+        .solution-container {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #28a745;
+            background-color: #d4edda;
+            border-radius: 5px;
+        }
+        
+        /* Styles pour le graphique interactif */
+        #animation-interactive {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+        #controls {
+            display: flex;
+            flex-direction: column;
+            width: 90%;
+            max-width: 400px;
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        #graphique, #example-graphique {
+            background-color: #ffffff;
+            border: 2px solid #333;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            width: 100%; 
+            height: auto;
+            max-width: 400px; 
+        }
+        #dynamic-equation {
+            font-size: 1.5em;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #28a745;
+        }
+        .annotation-m { color: #dc3545; font-weight: bold; } 
+        .annotation-p { color: #007bff; font-weight: bold; } 
+        .btn-toggle-interactive {
+            background-color: #f0ad4e;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        /* Styles Flashcards */
+        #flashcard-box {
+            background-color: #f0f0ff;
+            border: 2px solid #007bff;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px auto;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #flashcard-content.recto {
+            color: #0056b3;
+        }
+        #flashcard-content.verso {
+            color: #333;
+            font-style: italic;
+        }
+        
+        /* STYLES SPÉCIFIQUES EXERCICES */
+        #exercise-section {
+            background-color: #e6f7ff; 
+            border: 2px solid #007bff;
+        }
+        #exercice-enonce {
+            font-size: 1.1em;
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 5px solid #007bff;
+            background-color: #f0f8ff;
+        }
+        #action-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        #next-exercise-btn {
+            background-color: #28a745;
+            color: white;
+            flex-grow: 1;
+        }
+        #solution-toggle-btn {
+            background-color: #007bff;
+            color: white;
+            flex-grow: 0;
+        }
+        #solution-content {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fffacd;
+            display: none;
+        }
+        .math {
+            font-style: italic;
+            color: #3a7a22;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 10px;
+            position: relative;
+        }
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* MEDIA QUERY pour les téléphones (petits écrans) */
+        @media (max-width: 550px) {
+            .btn-cas { min-width: 95%; max-width: 100%; }
+            .btn-group { flex-direction: column; }
+            .btn-toggle-hint, .btn-toggle-solution { margin: 5px 0; }
+            #action-buttons { flex-direction: column; } 
+            #next-exercise-btn, #solution-toggle-btn { flex-grow: 1; }
+        }
+    </style>
+</head>
+<body data-auth-anagram="Yanm Deroy (2025 Octobe R)">
+    <header>
+        <h1>Cours & Exercices sur les Droites : L'Équation Réduite \(y = mx + p\) 📐</h1>
+        
+        </header>
+
+    <main>
+        <section id="definition">
+            <button id="readIntroBtn" class="btn-toggle-interactive" style="background-color: #dc3545; margin-bottom: 0px; font-size: 1.0em; margin-top: 10px;" onclick="toggleReadIntro()">
+                🔊 Lire l'Introduction
+            </button>
+            <h2>Définition et Terminologie</h2>
+            <p>Dans un repère cartésien, toute droite <span class="encadre">non verticale</span> peut être décrite par une équation de la forme :</p>
+            
+            <p style="color: #007bff; text-align: center;">\[y = mx + p\]</p>
+            
+            <ul>
+                <li>Le paramètre <span class="encadre">\(m\)</span> est le <span class="encadre">Coefficient Directeur</span> (ou <span class="encadre">pente</span>). Il détermine l'inclinaison et le sens de la droite.</li>
+                <li>Le paramètre <span class="encadre">\(p\)</span> est l'<span class="encadre">Ordonnée à l'Origine</span>. C'est l'ordonnée du point où la droite coupe l'axe des \(y\) (l'axe des ordonnées).</li>
+                <li><span class="encadre">Cas particulier :</span> Les droites verticales ont une équation de la forme \(x = k\) et n'ont pas de coefficient directeur défini.</li>
+            </ul>
+        </section>
+        
+        <div style="text-align: center;">
+             <button id="toggleInteractiveBtn" class="btn-toggle-interactive" data-visible="false" onclick="toggleInteractiveSection()">
+                 Afficher l'Exploration Graphique Interactive
+             </button>
+        </div>
+
+        <section id="animation-interactive">
+            <h2>Exploration Interactive : Rôle de \(m\) et \(p\)</h2>
+            <p>Utilisez les curseurs pour modifier les paramètres \(m\) et \(p\) et observez l'impact sur la droite tracée.</p>
+            
+            <div id="controls">
+                <label for="sliderM">Coefficient directeur \(m\) (Pente <span class="annotation-m">Rouge</span>) : <span id="valM" class="annotation-m">1.0</span></label>
+                <input type="range" id="sliderM" min="-5" max="5" step="0.1" value="1" oninput="updateGraph(parseFloat(this.value), parseFloat(document.getElementById('sliderP').value))">
+                
+                <label for="sliderP">Ordonnée à l'origine \(p\) (Intersection <span class="annotation-p">Bleue</span>) : <span id="valP" class="annotation-p">0.0</span></label>
+                <input type="range" id="sliderP" min="-5" max="5" step="0.1" value="0" oninput="updateGraph(parseFloat(document.getElementById('sliderM').value), parseFloat(document.getElementById('sliderP').value))">
+            </div>
+
+            <canvas id="graphique"></canvas>
+            
+            <p id="dynamic-equation">Équation actuelle : \\[y = \htmlClass{m-value}{\text{?}}x \htmlClass{p-value}{\text{?}}\\]</p>
+        </section>
+        
+        <section>
+            <h2>Méthodes pour Déterminer l'Équation</h2>
+
+            <p>Cliquez sur une méthode pour voir un exemple de calcul dynamique :</p>
+            
+            <div id="btn-container">
+                <button class="btn-cas" onclick="handleCaseClick('methode-cas1')">1️⃣ Par 2 points (\(A\), \(B\))</button>
+                <button class="btn-cas" onclick="handleCaseClick('methode-cas2')">2️⃣ Par 1 point (\(A\)) et \(m\)</button>
+                <button class="btn-cas" onclick="handleCaseClick('methode-cas3')">3️⃣ Par 1 point (\(A\)) et \(p\)</button>
+                <button class="btn-cas" onclick="handleCaseClick('methode-cas4')">4️⃣ Par Lecture Graphique (\(m\) et \(p\))</button>
+            </div>
+
+            <div id="determination-equation">
+                
+                <div class="methode-container" id="methode-cas1">
+                    <h3>Cas 1 : Connaître deux points \(A(x_A; y_A)\) et \(B(x_B; y_B)\)</h3>
+                    <ol>
+                        <li><span class="encadre">Calcul de \(m\)</span> : Le coefficient directeur est donné par la formule : \[\dfrac{y_B - y_A}{x_B - x_A}\]</li>
+                        <li><span class="encadre">Calcul de \(p\)</span> : On utilise les coordonnées d'un point (\(A\)) dans \(y_A = m x_A + p\) pour trouver \(p\).</li>
+                        <li><span class="encadre">Conclusion</span> : L'équation est \(y = mx + p\).</li>
+                    </ol>
+                    <div class="difficulty-selectors">
+                        <button class="btn-niveau btn-niveau-1 active" data-level="1" data-case="methode-cas1" onclick="changeCaseLevel('methode-cas1', '1', this)">Niveau 1: Entiers</button>
+                        <button class="btn-niveau btn-niveau-2" data-level="2" data-case="methode-cas1" onclick="changeCaseLevel('methode-cas1', '2', this)">Niveau 2: Fractions</button>
+                    </div>
+                    <div class="exemple-box" id="exemple-cas1">
+                         <p id="enonce-cas1" style="font-size: 1.1em; font-weight: bold;">(Enoncé du Cas 1)</p>
+                         <div class="btn-group">
+                             <button class="btn-toggle-hint" data-target="hint-cas1" onclick="toggleHintSolution(this)">Voir Indication</button>
+                             <button class="btn-toggle-solution" data-target="solution-cas1" onclick="toggleHintSolution(this)">Voir Solution</button>
+                         </div>
+                         <div class="hint-container" id="hint-cas1" style="display:none;"></div>
+                         <div class="solution-container" id="solution-cas1" style="display:none;"></div>
+                    </div>
+                </div>
+                
+                <div class="methode-container" id="methode-cas2">
+                    <h3>Cas 2 : Connaître un point \(A(x_A; y_A)\) et le coefficient directeur \(m\)</h3>
+                    <ol>
+                        <li><span class="encadre">\(m\) est connu</span> : Le début de l'équation est \(y = mx + p\).</li>
+                        <li><span class="encadre">Calcul de \(p\)</span> : On substitue \(x_A\), \(y_A\) et \(m\) dans \(y_A = m x_A + p\) pour trouver \(p\).</li>
+                    </ol>
+                    <div class="difficulty-selectors">
+                        <button class="btn-niveau btn-niveau-1 active" data-level="1" data-case="methode-cas2" onclick="changeCaseLevel('methode-cas2', '1', this)">Niveau 1: Entiers</button>
+                        <button class="btn-niveau btn-niveau-2" data-level="2" data-case="methode-cas2" onclick="changeCaseLevel('methode-cas2', '2', this)">Niveau 2: Fractions</button>
+                    </div>
+                    <div class="exemple-box" id="exemple-cas2">
+                         <p id="enonce-cas2" style="font-size: 1.1em; font-weight: bold;"></p>
+                         <div class="btn-group">
+                             <button class="btn-toggle-hint" data-target="hint-cas2" onclick="toggleHintSolution(this)">Voir Indication</button>
+                             <button class="btn-toggle-solution" data-target="solution-cas2" onclick="toggleHintSolution(this)">Voir Solution</button>
+                         </div>
+                         <div class="hint-container" id="hint-cas2" style="display:none;"></div>
+                         <div class="solution-container" id="solution-cas2" style="display:none;"></div>
+                    </div>
+                </div>
+
+                <div class="methode-container" id="methode-cas3">
+                    <h3>Cas 3 : Connaître un point \(A(x_A; y_A)\) et l'ordonnée à l'origine \(p\)</h3>
+                    <ol>
+                        <li><span class="encadre">\(p\) est connu</span> : \(p\) est l'ordonnée du point d'intersection de la droite avec l'axe \(y\).</li>
+                        <li><span class="encadre">Calcul de \(m\)</span> : On substitue \(x_A\), \(y_A\) et \(p\) dans \(y_A = m x_A + p\). On isole \(m\).</li>
+                    </ol>
+                    <div class="difficulty-selectors">
+                        <button class="btn-niveau btn-niveau-1 active" data-level="1" data-case="methode-cas3" onclick="changeCaseLevel('methode-cas3', '1', this)">Niveau 1: Entiers</button>
+                        <button class="btn-niveau btn-niveau-2" data-level="2" data-case="methode-cas3" onclick="changeCaseLevel('methode-cas3', '2', this)">Niveau 2: Fractions</button>
+                    </div>
+                    <div class="exemple-box" id="exemple-cas3">
+                         <p id="enonce-cas3" style="font-size: 1.1em; font-weight: bold;"></p>
+                         <div class="btn-group">
+                             <button class="btn-toggle-hint" data-target="hint-cas3" onclick="toggleHintSolution(this)">Voir Indication</button>
+                             <button class="btn-toggle-solution" data-target="solution-cas3" onclick="toggleHintSolution(this)">Voir Solution</button>
+                         </div>
+                         <div class="hint-container" id="hint-cas3" style="display:none;"></div>
+                         <div class="solution-container" id="solution-cas3" style="display:none;"></div>
+                    </div>
+                </div>
+
+                <div class="methode-container" id="methode-cas4">
+                    <h3>Cas 4 : Connaître la droite tracée (Lecture Graphique)</h3>
+                    <ol>
+                        <li><span class="encadre">Lecture de \(p\)</span> : On détermine le point où la droite coupe l'axe des ordonnées (\(y\)). L'ordonnée de ce point est la valeur de \(p\).</li>
+                        <li><span class="encadre">Lecture de \(m\)</span> : À partir de ce point \(p\) (ou de tout autre point facile à lire), on avance de <span class="encadre">1 unité horizontalement</span> et on compte l'unité parcourue <span class="encadre">verticalement</span> pour rejoindre la droite. Cette valeur verticale est \\(m\\).</li>
+                        <li><span class="encadre">Conclusion</span> : L'équation est \(y = mx + p\).</li>
+                    </ol>
+                    <div class="difficulty-selectors">
+                        <button class="btn-niveau btn-niveau-1 active" data-level="1" data-case="methode-cas4" onclick="changeCaseLevel('methode-cas4', '1', this)">Niveau 1: Entiers</button>
+                        <button class="btn-niveau btn-niveau-2" data-level="2" data-case="methode-cas4" onclick="changeCaseLevel('methode-cas4', '2', this)">Niveau 2: Fractions</button>
+                    </div>
+                    <div class="exemple-box" id="exemple-cas4">
+                         <p id="enonce-cas4" style="font-size: 1.1em; font-weight: bold;"></p>
+                         <div id="graphique-exemple-container" style="text-align: center;">
+                             <canvas id="example-graphique" width="300" height="300"></canvas>
+                         </div>
+                         <div class="btn-group">
+                             <button class="btn-toggle-hint" data-target="hint-cas4" onclick="toggleHintSolution(this)">Voir Indication</button>
+                             <button class="btn-toggle-solution" data-target="solution-cas4" onclick="toggleHintSolution(this)">Voir Solution</button>
+                         </div>
+                         <div class="hint-container" id="hint-cas4" style="display:none;"></div>
+                         <div class="solution-container" id="solution-cas4" style="display:none;"></div>
+                    </div>
+                </div>
+                </div>
+        </section>
+        
+        <section id="flashcards-section">
+            <h2>Révision : Cartes Mémoire (Flashcards) 🧠</h2>
+            <p>Cliquez sur le bouton <span class="encadre">Démarrer</span> pour commencer la révision. Les notions seront mélangées et présentées une par une.</p>
+            
+            <div id="flashcard-box" onclick="toggleCard()">
+                <div id="flashcard-content" class="recto">
+                    <p id="flashcard-text">Cliquez sur <span class="encadre">Démarrer</span> pour commencer.</p>
+                </div>
+                <p id="card-counter" style="text-align: center; margin-top: 10px; font-weight: 500;"></p>
+            </div>
+
+            <div id="flashcard-controls" style="text-align: center;">
+                <button id="start-revision-btn" class="btn-toggle-solution" style="min-width: 180px; margin: 5px;" onclick="startRevision()">Démarrer la Révision</button>
+                <button id="show-answer-btn" class="btn-toggle-hint" style="min-width: 180px; margin: 5px; display: none;" onclick="toggleCard()">Voir le Verso / Réponse</button>
+                <button id="next-card-btn" class="btn-toggle-solution" style="min-width: 180px; margin: 5px; display: none;" onclick="nextCard()">Carte Suivante</button>
+            </div>
+        </section>
+
+        <section class="container" id="exercise-section">
+            <h2>Générateur d'Exercices Aléatoires</h2>
+            <div id="exercice-enonce">
+                Cliquez sur "Exercice Suivant" pour charger le premier exercice...
+            </div>
+
+            <div id="action-buttons">
+                <button id="next-exercise-btn" class="btn" onclick="loadExercise()">Exercice Suivant ▶️</button>
+                
+                <button id="solution-toggle-btn" class="btn" onclick="toggleSolution()">Afficher la Solution</button>
+            </div>
+
+            <div id="solution-content">
+                </div>
+        </section>
+
+        </main>
+    <footer style="text-align: center; margin-top: 50px; padding: 10px; font-size: 0.9em; color: #777; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+        <p style="margin: 5px 0;">Auteur : Yann Merdy (Octobre 2025)</p>
+        <button id="btn-copyright" class="btn-toggle-interactive" 
+                style="background-color: #343a40; margin: 5px 0; padding: 5px 10px; font-size: 0.9em;"
+                onclick="document.getElementById('copyright-modal').style.display = 'block';">
+            Droits d'Auteur / Reproduction
+        </button>
+    </footer>
+    
+    <div id="copyright-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-btn" onclick="document.getElementById('copyright-modal').style.display = 'none';">&times;</span>
+            <div id="copyright-text">
+                <h3>🚨 Avertissement - Droits d'Auteur (Livre I, Titre II du Code de la propriété intellectuelle)</h3>
+                <p>Le contenu de ce document, y compris le code JavaScript et les fonctions de génération d'exercices, est protégé par le droit d'auteur. Toute reproduction ou utilisation sans l'accord écrit de l'auteur est strictement interdite.</p>
+                <ul>
+                    <li><strong>Article L.111-1 :</strong> L'auteur d'une œuvre de l'esprit jouit sur cette œuvre, du seul fait de sa création, d'un droit de propriété incorporelle exclusif et opposable à tous.</li>
+                    <li><strong>Article L.122-4 :</strong> Toute représentation ou reproduction intégrale ou partielle faite sans le consentement de l'auteur ou de ses ayants droit ou ayants cause est illicite. Il en est de même pour la traduction, l'adaptation ou la transformation, l'arrangement ou la reproduction par un art ou un procédé quelconque.</li>
+                    <li><strong>Article L.335-2 (Sanctions) :</strong> La contrefaçon en France est un délit puni de trois ans d'emprisonnement et de 300 000 euros d'amende.</li>
+                </ul>
+                <p>Pour toute demande d'autorisation de reproduction ou de diffusion, veuillez contacter l'auteur (yann.merdy@gmail.com).</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =================================================================
+        // == UTILS MATHÉMATIQUES (FONCTIONS DE BASE ET FORMATAGE LATEX) ==
+        // =================================================================
+        
+        function getRandomInt(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function getRandomFloat(min, max, precision = 2) {
+            const factor = Math.pow(10, precision);
+            return Math.round((Math.random() * (max - min) + min) * factor) / factor;
+        }
+
+        function gcd(a, b) {
+            return b ? gcd(b, a % b) : a;
+        }
+        function lcm(a, b) {
+            if (a === 0 || b === 0) return 0;
+            return Math.abs(a * b) / gcd(a, b);
+        }
+        function simplifyFraction(f) {
+            if (f.den === 0) return f;
+            if (f.num === 0) return { num: 0, den: 1 };
+            const common = gcd(Math.abs(f.num), Math.abs(f.den));
+            let num_s = f.num / common;
+            let den_s = f.den / common;
+            if (den_s < 0) {
+                num_s = -num_s;
+                den_s = -den_s;
+            }
+            return { num: num_s, den: den_s };
+        }
+        function generateSimpleFraction(numRange = 4, denRange = 4) {
+            let den = getRandomInt(2, denRange);
+            let num = getRandomInt(-numRange, numRange);
+            while (num !== 0 && num % den === 0) {
+                num = getRandomInt(-numRange, numRange);
+            }
+            return simplifyFraction({ num, den });
+        }
+        function multiplyFractions(f1, f2) {
+            let num = f1.num * f2.num;
+            let den = f1.den * f2.den;
+            return simplifyFraction({ num: num, den: den });
+        }
+        function addFractions(f1, f2) {
+            let den = f1.den * f2.den;
+            let num = f1.num * f2.den + f2.num * f1.den;
+            return simplifyFraction({ num: num, den: den });
+        }
+        function subtractFractions(f1, f2) {
+            // Soustraire f2 revient à ajouter l'opposé de f2
+            return addFractions(f1, { num: -f2.num, den: f2.den });
+        }
+        function divideFractions(f1, f2) {
+            if (f2.num === 0) return { num: 0, den: 0 };
+            return multiplyFractions(f1, { num: f2.den, den: f2.num });
+        }
+        function formatNum(n) {
+            // Le remplacement pour la virgule n'est nécessaire que si le nombre est décimal
+            if (n === Math.floor(n)) return n.toString();
+            return n.toString().replace('.', ',');
+        }
+        
+        /**
+         * Formate un nombre/fraction en chaîne LaTeX pour utilisation dans une expression (utilise \dfrac).
+         */
+        function formatMath(num, den = 1, forceFraction = false) {
+            if (den === 0) return '???';
+            if (num === 0) return '0';
+            const f = simplifyFraction({ num, den });
+            if (!forceFraction && f.den === 1) {
+                return formatNum(f.num);
+            }
+            const sign = f.num * f.den < 0 ? '-' : '';
+            const abs_num = Math.abs(f.num);
+            const abs_den = Math.abs(f.den);
+            
+            return `${sign}\\dfrac{${formatNum(abs_num)}}{${formatNum(abs_den)}}`;
+        }
+        
+        /**
+         * Formate un nombre/fraction pour inclusion dans une expression après un opérateur.
+         * Ajoute des parenthèses LaTeX (\left(...\right)) si le nombre est négatif.
+         * C'est cette fonction qui gère les signes consécutifs.
+         */
+        function formatMathForOperator(num, den = 1, forceFraction = false) {
+            const f = simplifyFraction({ num, den });
+            if (f.num === 0) return '0';
+            
+            const formatted = formatMath(f.num, f.den, forceFraction);
+            
+            // Si le nombre formaté commence par un signe moins (il est négatif), on l'encadre
+            if (formatted.startsWith('-')) {
+                // Utilisation des parenthèses LaTeX autour du terme négatif
+                return `\\left(${formatted}\\right)`;
+            }
+            return formatted;
+        }
+
+        // --- FONCTIONS POUR LA SECTION DÉTAIL (UTILISATION DE \dfrac) ---
+
+        /**
+         * Formate un nombre/fraction en chaîne LaTeX pour utilisation dans les détails (utilise \dfrac).
+         * Évite \dfrac{valeur}{1} si le dénominateur est 1.
+         */
+        function formatMathDfrac(num, den = 1) {
+            if (den === 0) return '???';
+            if (num === 0) return '0';
+            const f = simplifyFraction({ num, den });
+            
+            // Si le dénominateur est 1, on retourne juste l'entier
+            if (f.den === 1) {
+                return formatNum(f.num);
+            }
+            
+            // Sinon, on utilise \dfrac
+            const sign = f.num * f.den < 0 ? '-' : '';
+            const abs_num = Math.abs(f.num);
+            const abs_den = Math.abs(f.den);
+            
+            return `${sign}\\dfrac{${formatNum(abs_num)}}{${formatNum(abs_den)}}`;
+        }
+
+        /**
+         * Formate un nombre/fraction pour inclusion dans une expression après un opérateur.
+         * Utilise \dfrac et ajoute des parenthèses si le nombre est négatif.
+         * C'est cette fonction qui gère les signes consécutifs dans les détails.
+         */
+        function formatMathDfracForOperator(num, den = 1) {
+            const f = simplifyFraction({ num, den });
+            if (f.num === 0) return '0';
+            
+            const formatted = formatMathDfrac(f.num, f.den);
+            
+            // Si le nombre formaté commence par un signe moins (il est négatif), on l'encadre
+            if (formatted.startsWith('-')) {
+                // Utilisation des parenthèses LaTeX autour du terme négatif
+                return `\\left(${formatted}\\right)`;
+            }
+            return formatted;
+        }
+        
+        // --- FIN NOUVELLES FONCTIONS DFRAC ---
+
+
+        /**
+         * Formate un terme entier (p) dans une équation y = mx + p.
+         * Ex: 3 -> "+ 3" ; -3 -> "- 3" ; 0 -> ""
+         */
+        function formatSimpleIntegerEquationTerm(value) {
+            if (value === 0) return '';
+            
+            const formatted = formatNum(Math.abs(value)); // Valeur absolue formatée (3)
+
+            if (value > 0) {
+                return ` + ${formatted}`;
+            } else {
+                return ` - ${formatted}`;
+            }
+        }
+        
+        /**
+         * Formate l'équation complète y = mx + p en LaTeX (mode display \[...\\]).
+         */
+        function formatEquation(m, p) {
+            const m_val_int = formatMath(m.num, m.den, false); 
+            const p_val_frac = formatMath(p.num, p.den, true);
+            const p_val_int = formatMath(p.num, p.den, false);
+            
+            let equation = `y = `;
+            
+            // Partie mx
+            if (m.num === 0) {
+                // Pas de terme x
+            } else if (m_val_int === '1') {
+                equation += `x`;
+            } else if (m_val_int === '-1') {
+                equation += `-x`;
+            } else if (m.den === 1) {
+                equation += `${m_val_int}x`;
+            } else {
+                // Utiliser la forme fractionnaire formatée avec \dfrac
+                const m_sign = m.num * m.den < 0 ? '-' : '';
+                const m_abs_num = Math.abs(m.num);
+                const m_abs_den = Math.abs(m.den);
+                equation += `${m_sign}\\dfrac{${m_abs_num}}{${m_abs_den}}x`;
+            }
+
+            // Partie p
+            if (p.num !== 0) {
+                const isPositive = p.num * p.den > 0;
+                
+                if (m.num !== 0) {
+                    // Si m existe, ajouter + ou -
+                    const p_part = p.den === 1 ? p_val_int : p_val_frac;
+                    const p_part_abs = p_part.replace('-', '');
+                    equation += isPositive ? ` + ${p_part_abs}` : ` - ${p_part_abs}`;
+                } else {
+                    // Si m est nul, y = p
+                    equation = `y = ${p.den === 1 ? p_val_int : p_val_frac}`;
+                }
+            } else if (m.num === 0) {
+                 equation = `y = 0`; // Droite y=0
+            }
+            
+            return `\\[${equation}\\]`;
+        }
+        
+        /**
+         * Génère le HTML pour le bouton de détail de fraction et son explication.
+         * INCLUS L'EXPLICATION ÉTAPE PAR ÉTAPE (Numérateur/Dénominateur)
+         */
+        function createDetailFractionButton(f1, operator, f2, calculationName) {
+            let result;
+            try {
+                switch (operator) {
+                    case '+': result = addFractions(f1, f2); break;
+                    case '-': result = subtractFractions(f1, f2); break;
+                    case '*': result = multiplyFractions(f1, f2); break;
+                    case '/': result = divideFractions(f1, f2); break;
+                    default: return '';
+                }
+            } catch (e) {
+                return ''; 
+            }
+            
+            const ref_id = `detail-${Math.random().toString(36).substring(2, 9)}`;
+            
+            let detail_html = '';
+
+            detail_html += `<p><strong>Détail de l'opération ${calculationName} :</strong></p>`;
+            // Affichage de l'opération sous la forme A op B
+            detail_html += `<p> Opération de départ : \\(${formatMathDfrac(f1.num, f1.den)} ${operator} ${formatMathDfracForOperator(f2.num, f2.den)}\\)</p>`;
+
+            // Bloc de détail spécifique à l'opérateur
+            if (operator === '+' || operator === '-') {
+                // --- ADDITION/SOUSTRACTION ---
+                
+                const common_den = lcm(f1.den, f2.den);
+                const common_num_f1 = f1.num * (common_den / f1.den);
+                const common_num_f2 = f2.num * (common_den / f2.den);
+                const common_num_final = common_num_f1 + (operator === '+' ? 1 : -1) * common_num_f2;
+
+                const f2_is_negative = (f2.num * f2.den) < 0;
+                const operator_sign = operator; // + or -
+
+                detail_html += `<p> 💡 <strong>Règle :</strong> Réduction au <strong>même dénominateur</strong> (ici, \\(${common_den}\\)).</p>`;
+                
+                // Affichage de la mise au même dénominateur
+                detail_html += `<p style="margin-left: 15px;"> Étape 1 (Mise au Dénominateur Commun) : \\(${formatMathDfrac(common_num_f1, common_den)} ${operator_sign} ${formatMathDfracForOperator(common_num_f2, common_den)}\\)</p>`;
+
+                // Calcul du NUMÉRATEUR (Étape 2)
+                let numerateur_calc_html = `<p style="margin-left: 15px;"> <strong>Numérateur :</strong> \\(${formatNum(common_num_f1)} ${operator_sign} ${formatNum(common_num_f2)} = ${formatNum(common_num_final)}\\)</p>`;
+                
+                detail_html += numerateur_calc_html;
+                
+                // Affichage du DÉNOMINATEUR (Étape 3)
+                detail_html += `<p style="margin-left: 15px;"> <strong>Dénominateur :</strong> \\(${common_den}\\)</p>`;
+                
+                // Résultat non simplifié
+                detail_html += `<p> Résultat non simplifé : \\(${formatMathDfrac(common_num_final, common_den)}\\)</p>`;
+
+
+            } else if (operator === '*') {
+                // --- MULTIPLICATION ---
+                
+                const inter_num = f1.num * f2.num;
+                const inter_den = f1.den * f2.den;
+                
+                detail_html += `<p> 💡 <strong>Règle :</strong> Multiplication des numérateurs ensemble et des dénominateurs ensemble.</p>`;
+                
+                // Étape 1: Affichage de la règle
+                detail_html += `<p style="margin-left: 15px;"> Étape 1 : \\(\\dfrac{${formatNum(f1.num)} \\times ${formatNum(f2.num)}}{${formatNum(f1.den)} \\times ${formatNum(f2.den)}}\\)</p>`;
+
+                // Étape 2: Calcul du NUMÉRATEUR
+                detail_html += `<p style="margin-left: 15px;"> <strong>Numérateur :</strong> \\(${formatNum(f1.num)} \\times ${formatNum(f2.num)} = ${formatNum(inter_num)}\\)</p>`;
+
+                // Étape 3: Calcul du DÉNOMINATEUR
+                detail_html += `<p style="margin-left: 15px;"> <strong>Dénominateur :</strong> \\(${formatNum(f1.den)} \\times ${formatNum(f2.den)} = ${formatNum(inter_den)}\\)</p>`;
+                
+                // Résultat non simplifié
+                detail_html += `<p> Résultat non simplifé : \\(${formatMathDfrac(inter_num, inter_den)}\\)</p>`;
+
+
+            } else if (operator === '/') {
+                // --- DIVISION ---
+
+                // Fraction inverse de f2
+                const f2_inv = { num: f2.den, den: f2.num };
+                
+                // Calcul du résultat (déjà fait, mais on utilise inter_num/den pour le non simplifié)
+                const inter_num = f1.num * f2_inv.num;
+                const inter_den = f1.den * f2_inv.den;
+                
+                detail_html += `<p> 💡 <strong>Règle :</strong> Multiplier par l'<strong>inverse</strong> de la deuxième fraction (le diviseur).</p>`;
+                
+                // Étape 1: Transformation en multiplication
+                detail_html += `<p style="margin-left: 15px;"> Étape 1 (Multiplication par l'inverse) : \\(${formatMathDfrac(f1.num, f1.den)} \\times ${formatMathDfracForOperator(f2_inv.num, f2_inv.den)}\\)</p>`;
+
+                // Étape 2: Application de la règle de multiplication
+                detail_html += `<p style="margin-left: 15px;"> Étape 2 : \\(\\dfrac{${formatNum(f1.num)} \\times ${formatNum(f2_inv.num)}}{${formatNum(f1.den)} \\times ${formatNum(f2_inv.den)}}\\)</p>`;
+
+                // Étape 3: Calcul du NUMÉRATEUR
+                detail_html += `<p style="margin-left: 15px;"> <strong>Numérateur :</strong> \\(${formatNum(f1.num)} \\times ${formatNum(f2_inv.num)} = ${formatNum(inter_num)}\\)</p>`;
+
+                // Étape 4: Calcul du DÉNOMINATEUR
+                detail_html += `<p style="margin-left: 15px;"> <strong>Dénominateur :</strong> \\(${formatNum(f1.den)} \\times ${formatNum(f2_inv.den)} = ${formatNum(inter_den)}\\)</p>`;
+                
+                // Résultat non simplifié
+                detail_html += `<p> Résultat non simplifé : \\(${formatMathDfrac(inter_num, inter_den)}\\)</p>`;
+
+            } 
+            
+            // Résultat final simplifié (commun à tous)
+            detail_html += `<p> Résultat <strong>simplifié</strong> : \\(${formatMathDfrac(result.num, result.den)}\\)</p>`;
+            
+            return `
+                <button class="btn-ref btn-detail" data-ref-key="${ref_id}" title="Détail du calcul" style="margin-left: 10px; padding: 5px 10px; border: 1px solid #ccc; background-color: #eee; border-radius: 4px;" onclick="handleRefToggle(event)">∑ Détail</button>
+                <div class="ref-explanation ref-detail" id="ref-exp-${ref_id}" style="display: none; padding: 10px; margin-top: 5px; border-left: 3px solid #007bff; background-color: #f8f8ff;">
+                     ${detail_html}
+                </div>
+            `;
+        }
+        
+        // --- LOGIQUE FLASHCARDS ---
+        const FLASHCARDS = [
+            {
+                recto: "Que représente le paramètre \\(m\\) dans \\(y = mx + p\\) ?",
+                verso: "Le <strong>Coefficient Directeur</strong> (ou pente). Il indique l'inclinaison et le sens de la droite."
+            },
+            {
+                recto: "Que représente le paramètre \\(p\\) dans \\(y = mx + p\\) ?",
+                verso: "L'<strong>Ordonnée à l'Origine</strong>. C'est l'ordonnée du point d'intersection de la droite avec l'axe des \\(y\\)."
+            },
+            {
+                recto: "Quelle est la formule pour calculer le coefficient directeur \\(m\\) à partir de deux points \\(A(x_A; y_A)\\) et \\(B(x_B; y_B)\\) ?",
+                verso: "\\[m = \\dfrac{y_B - y_A}{x_B - x_A}\\]"
+            },
+            {
+                recto: "Comment l'ordonnée à l'origine \\(p\\) est-elle calculée si \\(m\\) et un point \\(A(x_A; y_A)\\) sont connus ?",
+                verso: "On utilise la relation : \\(y_A = m x_A + p\\), ce qui donne \\(p = y_A - m x_A\\)."
+            },
+            {
+                recto: "Quelle est l'équation d'une droite horizontale ?",
+                verso: "Elle a un coefficient directeur \\(m=0\\). L'équation est \\(y = p\\) (par exemple, \\(y = 3\\))."
+            },
+            {
+                recto: "Quelle est l'équation d'une droite verticale ?",
+                verso: "Elle n'a pas de coefficient directeur défini. L'équation est \\(x = k\\) (par exemple, \\(x = -2\\))."
+            }
+        ];
+
+        let currentFlashcardIndex = 0;
+        let isRecto = true;
+        let cardOrder = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function displayCard() {
+            if (cardOrder.length === 0) return;
+            const card = FLASHCARDS[cardOrder[currentFlashcardIndex]];
+            const contentDiv = document.getElementById('flashcard-content');
+            const textP = document.getElementById('flashcard-text');
+            const counter = document.getElementById('card-counter');
+
+            textP.innerHTML = isRecto ? card.recto : card.verso;
+            contentDiv.className = isRecto ? 'recto' : 'verso';
+            
+            counter.textContent = `Carte ${currentFlashcardIndex + 1} / ${FLASHCARDS.length}`;
+
+            if (window.MathJax) {
+                // Utilisation d'un setTimeout pour garantir que le DOM est à jour avant le rendu
+                setTimeout(() => {
+                    MathJax.typesetPromise([contentDiv, counter]); 
+                }, 0);
+            }
+        }
+
+        function startRevision() {
+            cardOrder = Array.from({ length: FLASHCARDS.length }, (_, i) => i);
+            shuffleArray(cardOrder);
+            currentFlashcardIndex = 0;
+            isRecto = true;
+            
+            document.getElementById('start-revision-btn').style.display = 'none';
+            document.getElementById('show-answer-btn').style.display = 'inline-block';
+            document.getElementById('next-card-btn').style.display = 'inline-block';
+
+            displayCard();
+        }
+
+        function toggleCard() {
+            if (document.getElementById('start-revision-btn').style.display !== 'none') {
+                 // Ne rien faire si la révision n'a pas commencé
+                 return;
+            } 
+            isRecto = !isRecto;
+            document.getElementById('show-answer-btn').textContent = isRecto ? 'Voir le Verso / Réponse' : 'Masquer le Verso';
+            displayCard();
+        }
+
+        function nextCard() {
+            currentFlashcardIndex++;
+            if (currentFlashcardIndex >= FLASHCARDS.length) {
+                currentFlashcardIndex = 0; // Boucle de révision
+            }
+            isRecto = true;
+            document.getElementById('show-answer-btn').textContent = 'Voir le Verso / Réponse';
+            displayCard();
+        }
+        
+        // =================================================================
+        // == LOGIQUE GÉNÉRATEUR EXERCICES ALÉATOIRES (SECTION 5) ==========
+        // =================================================================
+
+        function toggleSolution() {
+            const solutionDiv = document.getElementById('solution-content');
+            const button = document.getElementById('solution-toggle-btn');
+            if (solutionDiv.style.display === 'none') {
+                solutionDiv.style.display = 'block';
+                button.textContent = 'Masquer la Solution';
+                button.style.backgroundColor = '#d9534f'; 
+            } else {
+                solutionDiv.style.display = 'none';
+                button.textContent = 'Afficher la Solution';
+                button.style.backgroundColor = '#007bff';
+            }
+             if (window.MathJax) {
+                MathJax.typesetPromise([solutionDiv]);
+            }
+        }
+        
+        // Exercice 1: Visibilité (Droites verticales)
+        function generateExo1() {
+            let pointL = {x: getRandomInt(1, 5), y: getRandomInt(1, 10)};
+            let pointO = {x: getRandomInt(7, 12), y: getRandomInt(1, 10)};
+            let murX;
+            let estVisible;
+            if (Math.random() < 0.5) { 
+                murX = getRandomInt(pointL.x + 1, pointO.x - 1);
+                estVisible = "Non";
+            } else {
+                murX = getRandomInt(pointO.x + 1, pointO.x + 5); 
+                estVisible = "Oui";
+            }
+            
+            const enonce = `
+                Dans un système de coordonnées, un point lumineux L et un observateur O sont donnés par \\(L(${pointL.x}, ${pointL.y})\\) et \\(O(${pointO.x}, ${pointO.y})\\). Un mur de séparation est modélisé par la droite \\(x = ${murX}\\).
+                L'observateur peut-il voir la lumière ? (La ligne de vue est une droite.)
+            `;
+            const solution = `
+                <p>La lumière L (\\(x_L = ${pointL.x}\\)) et l'observateur O (\\(x_O = ${pointO.x}\\)) sont séparés par la droite (mur) d'équation \\(x = ${murX}\\).</p>
+                <p>La vue est bloquée <strong>si</strong> le mur (\\(${murX}\\)) est entre les coordonnées \\(x\\) de L et O (soit entre \\(${pointL.x}\\) et \\(${pointO.x}\\)).</p>
+                <p>Réponse : <span style="color: ${estVisible === 'Oui' ? 'green' : 'red'};">${estVisible}</span>.</p>
+            `;
+            return {enonce, solution};
+        }
+        
+        // Exercice 2: Point d'équilibre Offre/Demande (Économie)
+        function generateExo2() {
+            let m_offre = getRandomInt(1, 3);
+            let m_demande = getRandomInt(-4, -1);
+            let p_offre = getRandomInt(1, 10);
+            let p_demande = getRandomInt(20, 40);
+            
+            // Correction de l'affichage des équations dans l'énoncé
+            const p_offre_term = formatSimpleIntegerEquationTerm(p_offre);
+            const p_demande_term = formatSimpleIntegerEquationTerm(p_demande);
+
+            const num = p_demande - p_offre;
+            const den = m_offre - m_demande;
+            
+            // Calcul du prix (Q) et de la quantité (P) d'équilibre
+            const prixF = divideFractions({num: num, den: 1}, {num: den, den: 1});
+            const m_offreF = {num: m_offre, den: 1};
+            const p_offreF = {num: p_offre, den: 1};
+            
+            const qteF = addFractions(multiplyFractions(m_offreF, prixF), p_offreF);
+            
+            const prix_eq = formatMath(prixF.num, prixF.den);
+            const qte_eq = formatMath(qteF.num, qteF.den);
+
+            const enonce = `
+                Le prix (\\(P\\)) et la quantité (\\(Q\\)) d'un produit sont déterminés par les fonctions d'offre et de demande :
+                <ul>
+                    <li>Offre : \\(P = ${m_offre}Q ${p_offre_term}\\)</li>
+                    <li>Demande : \\(P = ${m_demande}Q ${p_demande_term}\\)</li>
+                </ul>
+                Déterminez la quantité d'équilibre (\\(Q\\)) et le prix d'équilibre (\\(P\\)).
+            `;
+            
+            const solution = `
+                <p>1. <strong>Calcul de la quantité d'équilibre (\\(Q\\)) :</strong> \\(P_{\\text{offre}} = P_{\\text{demande}}\\)</p>
+                <p>\\(${m_offre}Q ${p_offre_term} = ${m_demande}Q ${p_demande_term}\\)</p>
+                <p>\\(Q(${m_offre} - ${formatMathForOperator(m_demande, 1)}) = ${p_demande} - ${formatMathForOperator(p_offre, 1)}\\)</p>
+                <p>Quantité d'équilibre \\(Q = \\dfrac{${num}}{${den}} = ${formatMath(prixF.num, prixF.den)}\\)</p>
+                <p>2. <strong>Calcul du prix d'équilibre (\\(P\\)) :</strong></p>
+                <p>\\(P = ${m_offre} \\times ${formatMathForOperator(prixF.num, prixF.den, true)} + ${p_offre} = ${qte_eq}\\)</p>
+                <p>Réponse : Quantité \\(${prix_eq}\\) pour Prix \\(${qte_eq}\\).</p>
+            `;
+            return {enonce, solution};
+        }
+
+        // Exercice 3: Point d'intersection de deux droites
+        function generateExo3() {
+            let m1 = getRandomInt(-3, 3);
+            let m2 = getRandomInt(-3, 3);
+            while (m1 === m2) { m2 = getRandomInt(-3, 3); }
+            let p1 = getRandomInt(-5, 5);
+            let p2 = getRandomInt(-5, 5);
+            
+            const numX = p2 - p1;
+            const denX = m1 - m2;
+            
+            const X_F = divideFractions({num: numX, den: 1}, {num: denX, den: 1});
+            const Y_F = addFractions(
+                multiplyFractions({num: m1, den: 1}, X_F),
+                {num: p1, den: 1}
+            );
+
+            const X_eq = formatMath(X_F.num, X_F.den);
+            const Y_eq = formatMath(Y_F.num, Y_F.den);
+            
+            // Correction de l'affichage des équations dans l'énoncé
+            const p1_term = formatSimpleIntegerEquationTerm(p1);
+            const p2_term = formatSimpleIntegerEquationTerm(p2);
+
+            const enonce = `
+                Déterminez le point d'intersection des deux droites suivantes :
+                <ul>
+                    <li>Droite 1 : \\(y = ${m1}x ${p1_term}\\)</li>
+                    <li>Droite 2 : \\(y = ${m2}x ${p2_term}\\)</li>
+                </ul>
+            `;
+            
+            // Utilisation de formatMathForOperator pour éviter les doubles signes dans la soustraction
+            const solution = `
+                <p>1. <strong>Égalisation :</strong> On pose \\(y_1 = y_2\\) : ${m1}x ${p1_term} = ${m2}x ${p2_term}\\)</p>
+                <p>2. <strong>Résolution pour \\(x\\) :</strong> \\(x \\left( ${m1} - ${formatMathForOperator(m2, 1)} \\right) = ${p2} - ${formatMathForOperator(p1, 1)}\\). D'où \\(x = ${X_eq}\\)</p>
+                <p>3. <strong>Calcul de \\(y\\) :</strong> \\(y = ${m1} \\times ${formatMathForOperator(X_F.num, X_F.den, true)} + ${p1} = ${Y_eq}\\)</p>
+                <p>Le point d'intersection est \\(I(${X_eq}; ${Y_eq})\\).</p>
+            `;
+            return {enonce, solution};
+        }
+
+        // Exercice 4: Droites parallèles ou perpendiculaires
+        function generateExo4() {
+            const m_ref = getRandomInt(-4, 4);
+            const p_ref = getRandomInt(-5, 5);
+            const pointA = {x: getRandomInt(-5, 5), y: getRandomInt(-5, 5)};
+            const isParallel = Math.random() < 0.5;
+            
+            let m_recherche;
+            let relation_label;
+            
+            if (isParallel) {
+                m_recherche = {num: m_ref, den: 1};
+                relation_label = "parallèle";
+            } else {
+                if (m_ref === 0) { 
+                    // Cas perpendiculaire à y=p (droite horizontale) -> x=k (droite verticale)
+                    const enonce = `Déterminez l'équation de la droite qui passe par le point \\(A(${pointA.x}, ${pointA.y})\\) et qui est <strong>perpendiculaire</strong> à la droite d'équation \\(y = ${p_ref}\\).`;
+                    const solution = `<p>La droite \\(y = ${p_ref}\\) est horizontale. La droite perpendiculaire est donc verticale et son équation est \\(x = k\\). Puisqu'elle passe par \\(A(${pointA.x}, ${pointA.y})\\), l'équation est : \\(x = ${pointA.x}\\)</p>`;
+                    return {enonce, solution};
+                } else {
+                    m_recherche = simplifyFraction({num: -1, den: m_ref});
+                    relation_label = "perpendiculaire";
+                }
+            }
+            
+            // Correction de l'affichage de l'équation de référence
+            const p_ref_term = formatSimpleIntegerEquationTerm(p_ref);
+            const m_ref_str = m_ref === 1 ? '' : m_ref === -1 ? '-' : m_ref;
+            const enonce_ref = `\\(y = ${m_ref_str}x ${p_ref_term}\\)`;
+            
+            const xA_F = {num: pointA.x, den: 1};
+            const yA_F = {num: pointA.y, den: 1};
+            
+            const p_F = subtractFractions(yA_F, multiplyFractions(m_recherche, xA_F));
+            const equation_final = formatEquation(m_recherche, p_F);
+            
+            const enonce = `
+                Déterminez l'équation de la droite qui passe par le point \\(A(${pointA.x}, ${pointA.y})\\) et qui est <strong>${relation_label}</strong> à la droite d'équation ${enonce_ref}.
+            `;
+            
+            // Utilisation de formatMathForOperator dans le calcul de p
+            const m_xA_calc = multiplyFractions(m_recherche, xA_F);
+            
+            // IMPORTANT: Pour garantir l'absence de signes consécutifs, on utilise formatMathDfracForOperator pour (m*xA)
+            const solution = `
+                <p>1. <strong>Pente (\\(m\\)) :</strong> La droite recherchée a la pente \\(m = ${formatMath(m_recherche.num, m_recherche.den)}\\).</p>
+                <p>2. <strong>Ordonnée à l'origine (\\(p\\)) :</strong> En utilisant \\(A(${pointA.x}, ${pointA.y})\\) dans \\(y = mx + p\\) :</p>
+                <p>\\(p = y_A - m x_A = ${formatMathDfrac(yA_F.num, yA_F.den)} - ${formatMathDfracForOperator(m_xA_calc.num, m_xA_calc.den)} = ${formatMath(p_F.num, p_F.den)}\\)</p>
+                <p>L'équation de la droite est : ${equation_final}</p>
+            `;
+            return {enonce, solution};
+        }
+        
+        // Exercice 5: Distance point à droite
+        function generateExo5() {
+            let m = getRandomFloat(-3, 3, 1);
+            let p = getRandomFloat(-5, 5, 1);
+            let pointA = {x: getRandomFloat(-5, 5, 1), y: getRandomFloat(-5, 5, 1)};
+
+            // Forme générale : ax + by + c = 0
+            const a = -m;
+            const b = 1;
+            const c = -p;
+
+            // Distance : D = |ax0 + by0 + c| / sqrt(a^2 + b^2)
+            const num = Math.abs(a * pointA.x + b * pointA.y + c);
+            const den = Math.sqrt(a * a + b * b);
+            const distance = num / den;
+            
+            const dist_arrondie = distance.toFixed(3).replace('.', ',');
+            
+            // Correction de l'affichage de l'équation dans l'énoncé
+            const p_term_display = p >= 0 ? `+ ${formatNum(p)}` : ` - ${formatNum(Math.abs(p))}`;
+            const m_str_display = m === 1 ? '' : m === -1 ? '-' : formatNum(m);
+
+            const enonce = `
+                Calculez la distance (au millième près) entre le point \\(A(${formatNum(pointA.x)}; ${formatNum(pointA.y)})\\) et la droite d'équation \\(y = ${m_str_display}x ${p_term_display}\\).
+            `;
+            
+            const c_display = c >= 0 ? `+ ${formatNum(c)}` : ` - ${formatNum(Math.abs(c))}`;
+            
+            const solution = `
+                <p>1. <strong>Forme générale :</strong> On réécrit l'équation \\(y = ${m_str_display}x ${p_term_display}\\) sous la forme \\(ax + by + c = 0\\), ce qui donne : \\(${formatNum(a)}x + 1y ${c_display} = 0\\). </p>
+                <p>2. <strong>Formule de Distance :</strong> \\(D = \\dfrac{|ax_0 + by_0 + c|}{\\sqrt{a^2 + b^2}}\\) </p>
+                <p>3. <strong>Calcul :</strong> \\(D \\approx ${dist_arrondie}\\)</p>
+                <p>Réponse : La distance est d'environ \\(${dist_arrondie}\\).</p>
+            `;
+            
+            return {enonce, solution};
+        }
+        
+        // --- LOGIQUE PRINCIPALE EXERCICES ---
+        function loadExercise() {
+            const generators = [
+                generateExo1, generateExo2, generateExo3, generateExo4, generateExo5
+            ]; 
+            
+            const randomIndex = Math.floor(Math.random() * generators.length);
+            const exercise = generators[randomIndex]();
+            
+            const enonceDiv = document.getElementById('exercice-enonce');
+            const solutionDiv = document.getElementById('solution-content');
+
+            enonceDiv.innerHTML = exercise.enonce;
+            solutionDiv.innerHTML = exercise.solution;
+            
+            solutionDiv.style.display = 'none';
+            document.getElementById('solution-toggle-btn').textContent = 'Afficher la Solution';
+            document.getElementById('solution-toggle-btn').style.backgroundColor = '#007bff';
+            
+            if (window.MathJax) {
+                // Utilisation de setTimeout pour garantir le rendu après l'injection DOM
+                setTimeout(() => {
+                    MathJax.typesetPromise([enonceDiv, solutionDiv]);
+                }, 0);
+            }
+        }
+        
+        // =================================================================
+        // == LOGIQUE EXEMPLES DE MÉTHODES (SECTION 3) =====================
+        // =================================================================
+
+        const CASE_GENERATORS = {
+            'methode-cas1': generateCas1Example,
+            'methode-cas2': generateCas2Example,
+            'methode-cas3': generateCas3Example,
+            'methode-cas4': generateCas4Example
+        };
+        
+        // Cas 1: Par 2 points
+        function generateCas1Example(level) {
+            const isIntegerLevel = (level === '1');
+            const range = isIntegerLevel ? 5 : 4;
+            let xA, xB;
+            do { xA = getRandomInt(-range, range); xB = getRandomInt(-range, range); } while (xA === xB);
+
+            let m, p;
+            if (isIntegerLevel) {
+                const m_int = getRandomInt(-2, 2); 
+                const p_int = getRandomInt(-5, 5);
+                m = {num: m_int, den: 1};
+                p = {num: p_int, den: 1};
+            } else {
+                m = generateSimpleFraction(range, range);
+                p = generateSimpleFraction(range, range);
+            }
+            
+            const yA_F = addFractions(multiplyFractions(m, {num: xA, den: 1}), p);
+            const yB_F = addFractions(multiplyFractions(m, {num: xB, den: 1}), p);
+            
+            const enonce = `Déterminer l'équation de la droite \\(D\\) passant par \\(A(${xA}; ${formatMath(yA_F.num, yA_F.den)})\\) et \\(B(${xB}; ${formatMath(yB_F.num, yB_F.den)})\\).`;
+            
+            // Calcul de m
+            const diffY = subtractFractions(yB_F, yA_F);
+            const diffX = {num: xB - xA, den: 1};
+            const m_calc = divideFractions(diffY, diffX);
+            
+            // Formatage du numérateur et du dénominateur pour la formule de m
+            const num_m_display = `${formatMathDfrac(yB_F.num, yB_F.den)} - ${formatMathDfracForOperator(yA_F.num, yA_F.den)}`;
+            const den_m_display = `${xB} - ${formatMathForOperator(xA, 1)}`;
+            
+            const m_html = `
+                <p>\\(m = \\dfrac{y_B - y_A}{x_B - x_A} = \\dfrac{${num_m_display}}{${den_m_display}}\\)</p>
+                ${createDetailFractionButton(diffY, '/', diffX, "Calcul de m")}
+                <p>D'où \\(m = ${formatMath(m_calc.num, m_calc.den)}\\)</p>
+            `;
+
+            // Calcul de p
+            const m_xA_calc = multiplyFractions(m_calc, {num: xA, den: 1});
+            const p_calc = subtractFractions(yA_F, m_xA_calc);
+            
+            const p_html = `
+                <p>On utilise \\(A(${xA}; ${formatMath(yA_F.num, yA_F.den)})\\) dans \\(y_A = m x_A + p\\) :</p>
+                <p>\\(p = y_A - m x_A = ${formatMathDfrac(yA_F.num, yA_F.den)} - ${formatMathDfracForOperator(m_xA_calc.num, m_xA_calc.den)}\\)</p>
+                ${createDetailFractionButton(yA_F, '-', m_xA_calc, "Calcul de p")}
+                <p>D'où \\(p = ${formatMath(p_calc.num, p_calc.den)}\\)</p>
+            `;
+
+            const solution = `
+                <p>1. <strong>Calcul du coefficient directeur (\\(m\\))</strong> :</p>
+                ${m_html}
+                <p>2. <strong>Calcul de l'ordonnée à l'origine (\\(p\\))</strong> :</p>
+                ${p_html}
+                <p>3. <strong>Conclusion</strong> : L'équation est ${formatEquation(m_calc, p_calc)}</p>
+            `;
+            const hint = `<p>Commencez par utiliser la formule pour \\(m\\) : \\(\\dfrac{y_B - y_A}{x_B - x_A}\\). Utilisez ensuite les coordonnées de \\(A\\) pour trouver \\(p\\).</p>`;
+
+            return {enonce, hint, solution};
+        }
+        
+        // Cas 2: Par 1 point et m
+        function generateCas2Example(level) {
+            const isIntegerLevel = (level === '1');
+            const range = isIntegerLevel ? 5 : 4;
+            
+            const m = isIntegerLevel ? {num: getRandomInt(-3, 3), den: 1} : generateSimpleFraction(range, range);
+            const xA = getRandomInt(-range, range);
+            const p = isIntegerLevel ? {num: getRandomInt(-5, 5), den: 1} : generateSimpleFraction(range, range);
+
+            const yA_F = addFractions(multiplyFractions(m, {num: xA, den: 1}), p);
+            
+            const enonce = `Déterminer l'équation de la droite \\(D\\) de coefficient directeur \\(m = ${formatMath(m.num, m.den)}\\) et passant par \\(A(${xA}; ${formatMath(yA_F.num, yA_F.den)})\\).`;
+            
+            // Calcul de p : p = yA - m * xA
+            const m_xA_calc = multiplyFractions(m, {num: xA, den: 1});
+            const p_calc = subtractFractions(yA_F, m_xA_calc); 
+            
+            // IMPORTANT: Affichage du terme soustrait (m xA)
+            const m_xA_display = formatMathDfracForOperator(m_xA_calc.num, m_xA_calc.den);
+
+            const solution = `
+                <p>1. <strong>L'équation a la forme</strong> \\(y = ${formatMath(m.num, m.den)}x + p\\).</p>
+                <p>2. <strong>Calcul de l'ordonnée à l'origine (\\(p\\))</strong> :</p>
+                <p>On utilise \\(A(${xA}; ${formatMath(yA_F.num, yA_F.den)})\\) dans l'équation :</p>
+                <p>\\(p = y_A - m x_A = ${formatMathDfrac(yA_F.num, yA_F.den)} - ${m_xA_display}\\)</p>
+                ${createDetailFractionButton(yA_F, '-', m_xA_calc, "Calcul de p")}
+                <p>D'où \\(p = ${formatMath(p_calc.num, p_calc.den)}\\)</p>
+                <p>3. <strong>Conclusion</strong> : L'équation est ${formatEquation(m, p_calc)}</p>
+            `;
+            const hint = `<p>L'équation est de la forme \\(y = mx + p\\). Vous connaissez \\(m\\), \\(x_A\\) et \\(y_A\\). Isolez \\(p\\).</p>`;
+            
+            return {enonce, hint, solution};
+        }
+        
+        // Cas 3: Par 1 point et p
+        function generateCas3Example(level) {
+            const isIntegerLevel = (level === '1');
+            const range = isIntegerLevel ? 5 : 4;
+            
+            const p = isIntegerLevel ? {num: getRandomInt(-5, 5), den: 1} : generateSimpleFraction(range, range);
+            let xA = getRandomInt(-range, range);
+            while (xA === 0) { xA = getRandomInt(-range, range); }
+            const m = isIntegerLevel ? {num: getRandomInt(-3, 3), den: 1} : generateSimpleFraction(range, range);
+
+            const yA_F = addFractions(multiplyFractions(m, {num: xA, den: 1}), p);
+            
+            const enonce = `Déterminer l'équation de la droite \\(D\\) d'ordonnée à l'origine \\(p = ${formatMath(p.num, p.den)}\\) et passant par \\(A(${xA}; ${formatMath(yA_F.num, yA_F.den)})\\).`;
+            
+            // Calcul de m : m = (yA - p) / xA
+            const diffY_calc = subtractFractions(yA_F, p);
+            const m_calc = divideFractions(diffY_calc, {num: xA, den: 1});
+            
+            // IMPORTANT: Affichage du terme soustrait (p)
+            const p_display = formatMathDfracForOperator(p.num, p.den);
+
+            const solution = `
+                <p>1. <strong>L'équation a la forme</strong> \\(y = mx + ${formatMath(p.num, p.den)}\\).</p>
+                <p>2. <strong>Calcul du coefficient directeur (\\(m\\))</strong> :</p>
+                <p>On utilise \\(A(${xA}; ${formatMath(yA_F.num, yA_F.den)})\\) dans l'équation :</p>
+                <p>\\(m = \\dfrac{y_A - p}{x_A} = \\dfrac{${formatMathDfrac(yA_F.num, yA_F.den)} - ${p_display}}{${xA}}\\)</p>
+                
+                ${createDetailFractionButton(diffY_calc, '/', {num: xA, den: 1}, "Calcul de m")}
+                <p>D'où \\(m = ${formatMath(m_calc.num, m_calc.den)}\\)</p>
+
+                <p>3. <strong>Conclusion</strong> : L'équation est ${formatEquation(m_calc, p)}</p>
+            `;
+            const hint = `<p>Remplacez \\(p\\), \\(x_A\\) et \\(y_A\\) dans l'équation \\(y_A = m x_A + p\\). Isolez ensuite \\(m\\).</p>`;
+            
+            return {enonce, hint, solution};
+        }
+        
+        // Cas 4: Par lecture graphique
+        function generateCas4Example(level) {
+            const isIntegerLevel = (level === '1');
+            const range = isIntegerLevel ? 3 : 2;
+
+            const p = isIntegerLevel ? {num: getRandomInt(-range, range), den: 1} : generateSimpleFraction(range, range);
+            const m = isIntegerLevel ? {num: getRandomInt(-range, range), den: 1} : generateSimpleFraction(range, range);
+            while (m.num === 0 && p.num === 0) { 
+                 m.num = getRandomInt(-range, range);
+            }
+            
+            const enonce = `Déterminer l'équation de la droite tracée ci-dessous.`;
+            
+            const solution = `
+                <p>1. <strong>Lecture de l'ordonnée à l'origine (\\(p\\))</strong> : La droite coupe l'axe des ordonnées au point \\(P(0; ${formatMath(p.num, p.den)})\\). Donc \\(p = ${formatMath(p.num, p.den)}\\).</p>
+                <p>2. <strong>Lecture du coefficient directeur (\\(m\\))</strong> : La lecture graphique indique que \\(m = ${formatMath(m.num, m.den)}\\)</p>
+                <p>3. <strong>Conclusion</strong> : L'équation est ${formatEquation(m, p)}</p>
+            `;
+            
+            const graphData = { m, p, range: 4 };
+            
+            const hint = `<p>Lisez d'abord l'ordonnée à l'origine \\(p\\), puis lisez le coefficient directeur \\(m\\) (variation verticale pour une variation horizontale de 1).</p>`;
+
+            return {enonce, hint, solution, graphData};
+        }
+
+        // --- FONCTIONS DE DESSIN DU GRAPHIQUE (Interactive et Exemple Cas 4) ---
+        function drawGrid(context, centerOffset = 0, scale = 1, lineColor = '#ccc') {
+            const size = context.canvas.width;
+            const step = size / (10 * scale); // 10 unités de -5 à 5
+            const origin = size / 2;
+            context.strokeStyle = lineColor;
+            context.lineWidth = 1;
+
+            // Lignes verticales
+            for (let x = -5; x <= 5; x++) {
+                const lineX = origin + x * step;
+                context.beginPath();
+                context.moveTo(lineX, 0);
+                context.lineTo(lineX, size);
+                context.stroke();
+            }
+            // Lignes horizontales
+            for (let y = -5; y <= 5; y++) {
+                const lineY = origin - y * step;
+                context.beginPath();
+                context.moveTo(0, lineY);
+                context.lineTo(size, lineY);
+                context.stroke();
+            }
+
+            // Axes
+            context.strokeStyle = '#333';
+            context.lineWidth = 2;
+            // Axe Y
+            context.beginPath();
+            context.moveTo(origin, 0);
+            context.lineTo(origin, size);
+            context.stroke();
+            // Axe X
+            context.beginPath();
+            context.moveTo(0, origin);
+            context.lineTo(size, origin);
+            context.stroke();
+        }
+
+        function drawLine(context, m, p, scale = 1, strokeStyle = '#dc3545', lineWidth = 3) {
+            const size = context.canvas.width;
+            const step = size / (10 * scale);
+            const origin = size / 2;
+
+            context.strokeStyle = strokeStyle;
+            context.lineWidth = lineWidth;
+            context.beginPath();
+
+            // Calculer y aux bords du graphique (x=-5 et x=5)
+            // y = mx + p
+            const x1 = -5 * scale;
+            const y1 = m * x1 + p;
+            const x2 = 5 * scale;
+            const y2 = m * x2 + p;
+
+            // Conversion en coordonnées du canvas
+            const canvasX1 = origin + x1 * step / scale;
+            const canvasY1 = origin - y1 * step / scale;
+            const canvasX2 = origin + x2 * step / scale;
+            const canvasY2 = origin - y2 * step / scale;
+
+            context.moveTo(canvasX1, canvasY1);
+            context.lineTo(canvasX2, canvasY2);
+            context.stroke();
+
+            // Marquer l'ordonnée à l'origine (p)
+            context.fillStyle = '#007bff';
+            const canvasP = origin - p * step / scale;
+            context.beginPath();
+            context.arc(origin, canvasP, 5, 0, 2 * Math.PI);
+            context.fill();
+        }
+
+        function updateGraph(m, p) {
+            // Mise à jour des valeurs affichées à côté des curseurs
+            document.getElementById('valM').textContent = m.toFixed(1);
+            document.getElementById('valP').textContent = p.toFixed(1);
+            
+            const canvas = document.getElementById('graphique');
+            // Gérer le cas où le canvas n'est pas encore prêt
+            if (!canvas || !canvas.getContext) return;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Dessiner la grille et les axes
+            drawGrid(ctx); 
+
+            // Dessiner la ligne
+            drawLine(ctx, m, p);
+            
+            // Mise à jour de l'équation LaTeX
+            const equationContainer = document.getElementById('dynamic-equation');
+            
+            let m_str = m === 1 ? '' : m === -1 ? '-' : m.toFixed(1);
+            let p_str = p > 0 ? ` + ${p.toFixed(1)}` : p < 0 ? ` ${p.toFixed(1)}` : '';
+            if (m === 0) {
+                 m_str = '';
+            }
+            if (m === 0 && p === 0) {
+                 equationContainer.innerHTML = `Équation actuelle : \\[y = 0\\]`;
+            } else if (m === 0) {
+                 equationContainer.innerHTML = `Équation actuelle : \\[y = ${p.toFixed(1)}\\]`;
+            } else if (p === 0) {
+                 equationContainer.innerHTML = `Équation actuelle : \\[y = ${m_str}x\\]`;
+            } else {
+                 equationContainer.innerHTML = `Équation actuelle : \\[y = ${m_str}x${p_str}\\]`;
+            }
+            
+            if (window.MathJax) {
+                // Utilisation de setTimeout pour garantir le rendu après l'injection DOM
+                setTimeout(() => {
+                    MathJax.typesetPromise([equationContainer]);
+                }, 0);
+            }
+        }
+        
+        function drawGraphCas4(canvasId, m_frac, p_frac) {
+            const canvas = document.getElementById(canvasId);
+             // Gérer le cas où le canvas n'est pas encore prêt
+            if (!canvas || !canvas.getContext) return;
+
+            const ctx = canvas.getContext('2d');
+            const m = m_frac.num / m_frac.den;
+            const p = p_frac.num / p_frac.den;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawGrid(ctx, 0, 1, '#ddd'); 
+            drawLine(ctx, m, p, 1, '#dc3545', 3);
+
+            // Indiquer le triangle de la pente (pour une pente lisible)
+            const size = canvas.width;
+            const step = size / 10;
+            const origin = size / 2;
+            
+            const readPointX = 1;
+            const readPointY = m + p;
+
+            if (m !== 0 && Math.abs(readPointX) <= 5 && Math.abs(readPointY) <= 5) {
+                // Point de départ (p)
+                ctx.fillStyle = '#007bff';
+                ctx.beginPath();
+                ctx.arc(origin, origin - p * step, 4, 0, 2 * Math.PI);
+                ctx.fill();
+
+                // Point après +1 en x
+                ctx.fillStyle = '#007bff';
+                ctx.beginPath();
+                ctx.arc(origin + readPointX * step, origin - readPointY * step, 4, 0, 2 * Math.PI);
+                ctx.fill();
+
+                // Dessin du triangle de pente
+                ctx.strokeStyle = '#28a745';
+                ctx.lineWidth = 1;
+                ctx.setLineDash([5, 5]); 
+                
+                // Horizontale (Delta X)
+                ctx.beginPath();
+                ctx.moveTo(origin, origin - p * step);
+                ctx.lineTo(origin + readPointX * step, origin - p * step);
+                ctx.stroke();
+
+                // Verticale (Delta Y)
+                ctx.beginPath();
+                ctx.moveTo(origin + readPointX * step, origin - p * step);
+                ctx.lineTo(origin + readPointX * step, origin - readPointY * step);
+                ctx.stroke();
+
+                ctx.setLineDash([]);
+            }
+        }
+
+        // FONCTIONS DE GESTION DES EXEMPLES ET NIVEAUX
+        function loadExample(caseId, generator, level) {
+            const result = generator(level);
+            
+            const enonceId = caseId.replace('methode-', 'enonce-');
+            const hintId = caseId.replace('methode-', 'hint-');
+            const solutionId = caseId.replace('methode-', 'solution-');
+            const exampleBoxId = caseId.replace('methode-', 'exemple-');
+
+            const enonceDiv = document.getElementById(enonceId);
+            const hintDiv = document.getElementById(hintId);
+            const solutionDiv = document.getElementById(solutionId);
+
+
+            enonceDiv.innerHTML = result.enonce;
+            hintDiv.innerHTML = result.hint;
+            solutionDiv.innerHTML = result.solution;
+            
+            // Réinitialiser les masques
+            hintDiv.style.display = 'none';
+            solutionDiv.style.display = 'none';
+            // Réinitialiser le texte des boutons
+            document.querySelectorAll(`#${exampleBoxId} .btn-toggle-hint`)[0].textContent = 'Voir Indication';
+            document.querySelectorAll(`#${exampleBoxId} .btn-toggle-solution`)[0].textContent = 'Voir Solution';
+
+            // Cas spécial pour le graphique (Cas 4)
+            const graphContainer = document.getElementById('graphique-exemple-container');
+            if (caseId === 'methode-cas4' && result.graphData) {
+                drawGraphCas4('example-graphique', result.graphData.m, result.graphData.p);
+                 if (graphContainer) graphContainer.style.display = 'block';
+            } else {
+                 if (graphContainer) graphContainer.style.display = 'none';
+            }
+            
+            if (window.MathJax) {
+                // S'assurer que le rendu LaTeX est fait après l'injection
+                // On cible les éléments mis à jour pour un traitement efficace et robuste
+                setTimeout(() => {
+                    MathJax.typesetPromise([enonceDiv, hintDiv, solutionDiv]);
+                }, 0);
+            }
+        }
+        
+        /**
+         * Gestionnaire générique pour les clics sur les boutons de cas (avec onclick)
+         */
+        function handleCaseClick(caseId) {
+            // 1. Masquer tous les conteneurs de méthode
+            document.querySelectorAll('.methode-container').forEach(c => c.classList.remove('active'));
+            
+            // 2. Afficher le conteneur sélectionné
+            const container = document.getElementById(caseId);
+            if (!container) return;
+            container.classList.add('active');
+            
+            // 3. Charger l'exemple (Niveau actif par défaut est 1, ou le niveau actif)
+            const activeLevelBtn = container.querySelector('.btn-niveau.active');
+            const level = activeLevelBtn ? activeLevelBtn.dataset.level : '1'; 
+            
+            const generator = CASE_GENERATORS[caseId];
+            if (generator) {
+                loadExample(caseId, generator, level);
+            }
+        }
+        
+        /**
+         * Gestionnaire de clic pour changer le niveau de difficulté
+         */
+        function changeCaseLevel(caseId, level, clickedButton) {
+            const container = document.getElementById(caseId);
+            if (!container) return;
+            
+            // Supprimer la classe 'active' de tous les boutons de niveau DANS CE CAS
+            container.querySelectorAll('.btn-niveau').forEach(b => b.classList.remove('active'));
+            
+            // Ajouter la classe 'active' au bouton cliqué
+            clickedButton.classList.add('active');
+            
+            // Recharge l'exemple avec le nouveau niveau
+            const generator = CASE_GENERATORS[caseId];
+            if (generator) {
+                 loadExample(caseId, generator, level);
+            }
+        }
+
+        // NOUVELLE FONCTION GLOBALE POUR LES BOUTONS INDICATION/SOLUTION
+        /**
+         * Fonction appelée par l'onclick inline des boutons Indication/Solution.
+         * @param {HTMLElement} buttonElement - Le bouton qui a été cliqué.
+         */
+        function toggleHintSolution(buttonElement) {
+            const targetId = buttonElement.getAttribute('data-target');
+            const targetDiv = document.getElementById(targetId);
+            
+            // Déterminer le conteneur parent du cas pour masquer les autres indications/solutions
+            const parentContainer = buttonElement.closest('.methode-container');
+            if (!parentContainer) return;
+
+            // Masquer les autres solutions/indications DANS LE MÊME CAS
+            parentContainer.querySelectorAll('.hint-container, .solution-container').forEach(div => {
+                if (div.id !== targetId) {
+                    div.style.display = 'none';
+                    // Réinitialiser les autres boutons
+                    const otherButton = parentContainer.querySelector(`[data-target="${div.id}"]`);
+                    if(otherButton) {
+                        otherButton.textContent = otherButton.classList.contains('btn-toggle-hint') ? 'Voir Indication' : 'Voir Solution';
+                    }
+                }
+            });
+
+            // Afficher/Masquer la cible
+            if (targetDiv.style.display === 'block') {
+                targetDiv.style.display = 'none';
+                buttonElement.textContent = buttonElement.classList.contains('btn-toggle-hint') ? 'Voir Indication' : 'Voir Solution';
+            } else {
+                targetDiv.style.display = 'block';
+                buttonElement.textContent = buttonElement.classList.contains('btn-toggle-hint') ? 'Masquer Indication' : 'Masquer Solution';
+                if (window.MathJax) {
+                    // Utilisation de setTimeout pour garantir le rendu après affichage
+                    setTimeout(() => {
+                         MathJax.typesetPromise([targetDiv]);
+                    }, 0);
+                }
+            }
+        }
+
+        // GESTION DU TOGGLE DES RÉFÉRENCES (pour les détails de calcul de fraction)
+        function handleRefToggle(event) {
+            // Logique de bascule pour les détails de fraction (boutons ∑ Détail)
+            let targetButton = event.target.closest('.btn-detail');
+            if (targetButton) {
+                const refKey = targetButton.dataset.refKey;
+                const explanationDiv = document.getElementById(`ref-exp-${refKey}`);
+                if (explanationDiv) {
+                    explanationDiv.style.display = explanationDiv.style.display === 'none' ? 'block' : 'none';
+                    if (explanationDiv.style.display === 'block' && window.MathJax) {
+                        // Utilisation de setTimeout pour garantir le rendu après affichage
+                        setTimeout(() => {
+                            MathJax.typesetPromise([explanationDiv]);
+                        }, 0);
+                    }
+                }
+            }
+        }
+        
+        /**
+         * Basculer l'affichage de l'Exploration Graphique Interactive
+         */
+        function toggleInteractiveSection() {
+            const toggleBtn = document.getElementById('toggleInteractiveBtn');
+            const interactiveSection = document.getElementById('animation-interactive');
+
+            const isVisible = interactiveSection.style.display === 'flex';
+            interactiveSection.style.display = isVisible ? 'none' : 'flex';
+            toggleBtn.textContent = isVisible ? 'Afficher l\'Exploration Graphique Interactive' : 'Masquer l\'Exploration Graphique Interactive';
+            toggleBtn.setAttribute('data-visible', !isVisible);
+            
+            // S'assurer que le graphique est redessiné quand il apparaît
+            if (!isVisible) {
+                const sliderM = document.getElementById('sliderM');
+                const sliderP = document.getElementById('sliderP');
+                updateGraph(parseFloat(sliderM.value), parseFloat(sliderP.value));
+            }
+        }
+        
+        /**
+         * Lecture audio de l'introduction avec bascule (toggle)
+         */000
+        function toggleReadIntro() {
+            const button = document.getElementById('readIntroBtn');
+            if ('speechSynthesis' in window) {
+                
+                if (window.speechSynthesis.speaking) {
+                    // Si la lecture est en cours, l'arrêter (STOP)
+                    window.speechSynthesis.cancel();
+                    button.textContent = '🔊 Lire l\'Introduction';
+                    button.style.backgroundColor = '#dc3545';
+                    return;
+                }
+                
+                // Si la lecture n'est pas en cours, la démarrer (START)
+                const text = `
+                    Cours et exercices sur les droites : l'équation réduite ygrec = mx + p. 
+                    Définition et Terminologie.
+                    Dans un repère cartésien, toute droite non verticale peut être décrite par une équation de la forme : ygrec = mx + p. 
+                    Le paramètre M est le coefficient directeur ou pente. Il détermine l'inclinaison et le sens de la droite.
+                    Le paramètre P est l'ordonnée à l'origine. C'est l'ordonnée du point où la droite coupe l'axe des ygrec (l'axe des ordonnées).
+		    Cas particulier :  Les droites verticales ont une équation de la forme x = k et n'ont pas de coefficient directeur défini.
+                `;
+                
+                // Annuler toute lecture en attente pour commencer celle-ci
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'fr-FR'; 
+                utterance.pitch = 1.0; 
+                utterance.rate = 1.0; 
+                
+                // Mettre à jour le bouton au début de la lecture
+                button.textContent = '🔇 Stopper la Lecture';
+                button.style.backgroundColor = '#6c757d'; 
+                
+                // Rétablir le bouton une fois la lecture terminée (même si elle est annulée)
+                utterance.onend = utterance.oncancel = () => {
+                    button.textContent = '🔊 Lire l\'Introduction';
+                    button.style.backgroundColor = '#dc3545';
+                };
+
+                window.speechSynthesis.speak(utterance);
+                
+            } else {
+                alert("Votre navigateur ne supporte pas l'API de synthèse vocale.");
+            }
+        }
+
+
+        // --- LOGIQUE PRINCIPALE (DOMContentLoaded) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            const sliderM = document.getElementById('sliderM');
+            const sliderP = document.getElementById('sliderP');
+            const canvas = document.getElementById('graphique');
+
+            // 1. Initialisation de l'exploration graphique
+            if(canvas) {
+                 canvas.width = 300;
+                 canvas.height = 300;
+            }
+            if(sliderM && sliderP) {
+                // Initialisation du graphique (appelle updateGraph)
+                updateGraph(parseFloat(sliderM.value), parseFloat(sliderP.value)); 
+            }
+            
+            // 2. Initialisation du premier cas d'étude (Cas 1)
+            const methodeCas1 = document.getElementById('methode-cas1');
+            if (methodeCas1) {
+                methodeCas1.classList.add('active');
+                loadExample('methode-cas1', generateCas1Example, '1');
+            }
+
+            // 3. Initialisation des droits d'auteur (Modal)
+            const modal = document.getElementById('copyright-modal');
+            window.onclick = function(event) {
+              if (event.target == modal) { modal.style.display = 'none'; }
+            }
+            
+
+            // 4. CHARGEMENT DU PREMIER EXERCICE ALÉATOIRE
+            loadExercise();
+        });
+    </script>
+</body>
+</html>
